@@ -3,7 +3,7 @@ import java.util.LinkedList;
 
 public class Transport{
 
-    public final static int CAPACIDAD = 500;
+    public final static int CAPACIDAD = 300;
 
     private static Transport transport;
     private HashMap<String, LinkedList<Message>> map;
@@ -24,6 +24,14 @@ public class Transport{
         return transport;
     }
 
+    /**
+     * Coloca un mensaje enviado por un nodo en
+     * su respectiva lista de mensajes enviados.
+     *
+     * @return <code>true</code> cuando se guardó el mensaje
+     *                          de manera satisfactoria.
+     *         <code>false</code> en otro caso.
+     */
     public synchronized boolean put(Message m){
         boolean status = false;
 
@@ -41,6 +49,9 @@ public class Transport{
         return status;
     }
 
+    /**
+     * Extrae un mensaje de los mensajes enviados por un nodo.
+     */
     public synchronized Message pop(String key){
         Message m = null;
 
