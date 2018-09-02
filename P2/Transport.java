@@ -28,7 +28,7 @@ public class Transport{
         boolean status = false;
 
         if(!map.containsKey(m.getDestino())){
-            map.put(m.getDestination(), new LinkedList<Message>());
+            map.put(m.getDestino(), new LinkedList<Message>());
         }
         
         if(size < CAPACIDAD){

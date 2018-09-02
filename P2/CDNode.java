@@ -1,7 +1,8 @@
 import org.graphstream.graph.Node;
-import java.util.Iterator;
-import javax.swing.JLabel;
 import java.awt.Color;
+import java.util.Iterator;
+import java.util.LinkedList;
+import javax.swing.JLabel;
 
 public class CDNode extends JLabel implements Runnable{
 
@@ -13,6 +14,7 @@ public class CDNode extends JLabel implements Runnable{
     private boolean activo;
     private Transport transport;
     private CDGraph graph;
+    private LinkedList<Message> mensajes;
 
     public CDNode(CDGraph g,Node n){
     	super();
@@ -21,15 +23,50 @@ public class CDNode extends JLabel implements Runnable{
     	transport = Transport.getInstance();
     	this.graph = g;
     	this.setFillColor(COLOR_DEFAULT);
+        this.mensajes = new LinkedList<Message>();
     }
 
+    /**
+     * En cada iteración, cualquier nodo generará un mensaje y lo
+     * enviará a sus vecinos.
+     *
+     * Después, leerá un mensaje y lo reenviará a todos sus vecinos
+     * mientras el tiempo de vida del mensaje lo permita.
+     */
     public void run(){
-    	//System.out.println("¿Qué necesitas que haga para que
-    	//un nodo genere un mensaje en cada iteración y lo mande a todos sus vecinos,
-    	//y despues lea un mensaje de y lo reenvie a todos sus vecinos siempre y
-    	//cuando su tiempo de vida, del mensaje, lo permita?");
+    	
+        while(this.activo){
+
+            Iterator<Node> nuevo_nodo = node.getNeighborNodeIterator();
+
+            while(nuevo_nodo.hasNext()){
+                Node n = nuevo_nodo.next();
+                Message m = new Message(node.getId(), n.getId());
+                this.sendMessage(m);
+            }
+
+            Message m = readMessage();
+
+            if(m != null){
+                mensajes.add(m);
+                nuevo_nodo = node.getNeighborNodeIterator();
+
+                while(nuevo_nodo.hasNext()){
+                    Node n = nuevo_nodo.next();
+                    Message reenviado = m.clonar();
+                    reenviado.setDestino(n.getId());
+                    reenviado.setTiempoVida(m.getTiempoVida()-1);
+                    this.sendMessage(reenviado);
+                }
+            }
+
+            sleep(100);
+        }
     }
 
+    /**
+     * Muestra el flujo de los mensajes.
+     */
     public String getText(){
     	String s = super.getText();
 
@@ -37,12 +74,16 @@ public class CDNode extends JLabel implements Runnable{
     		s+="ID: " + node.getId();
     	}
 
+        if(mensajes != null && !mensajes.isEmpty()){
+            s+=". Mensaje recibido de: " + mensajes.getLast().getOrigen() +".";
+        }
+
     	return s;
     }
 
-    public boolean sendMessage(Message m, String destination){
+    public boolean sendMessage(Message m){
     	this.setFillColor(COLOR_SEND);
-    	boolean status = transport.put(m, destination);
+    	boolean status = transport.put(m);
     	this.setFillColor(COLOR_DEFAULT);
     	return status;
     }

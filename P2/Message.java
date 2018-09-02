@@ -4,7 +4,7 @@
  */
 public class Message{
 
-	public final static VIDA = 10;
+	public final static int VIDA = 10;
 	private String origen;
 	private String destino;
 	private int tiempo_vida;
@@ -48,6 +48,12 @@ public class Message{
     	String s = "Origen: " + this.origen + ". Destino: " + this.destino;
     	s+=". Tiempo de Vida: " + this.tiempo_vida + ".";
     	return s;
+    }
+
+    public Message clonar(){
+        Message m = new Message(this.origen, this.destino);
+        m.setTiempoVida(this.tiempo_vida);
+        return m;
     }
     
 }
