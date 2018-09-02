@@ -144,6 +144,5 @@ public class CDGraph implements Runnable{
      */
     private void stopAction(){
     	this.stop();
-    	//System.out.println("¿Qué necesitas que haga para detener todo?");
     }
 }

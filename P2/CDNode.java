@@ -39,6 +39,7 @@ public class CDNode extends JLabel implements Runnable{
 
             Iterator<Node> nuevo_nodo = node.getNeighborNodeIterator();
 
+            //Generación del mensaje y envío a todos los vecinos del nodo
             while(nuevo_nodo.hasNext()){
                 Node n = nuevo_nodo.next();
                 Message m = new Message(node.getId(), n.getId());
@@ -47,6 +48,7 @@ public class CDNode extends JLabel implements Runnable{
 
             Message m = readMessage();
 
+            //Se recibe un mensaje y se reenvía a sus vecinos
             if(m != null){
                 mensajes.add(m);
                 nuevo_nodo = node.getNeighborNodeIterator();

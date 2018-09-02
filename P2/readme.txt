@@ -15,8 +15,15 @@ Para ejecutar es necesario escribir en consola:
 
 	java -cp .:../lib/gs-core-1.3.jar:../lib/gs-ui-1.3.jar:../lib/gs-algo-1.3.jar Main
 
-*** CDGraph stopAction ***
+*** CDGraph stopAction() ***
 
-	Para detener todo el proceso optamos por utilizar el método stop()
-	Si bien es una manera insegura de hacerlo, para esta práctica es necesario realizarlo de
+Para detener todo el proceso optamos por utilizar el método stop()
+Si bien es una manera insegura de hacerlo, para esta práctica es necesario realizarlo de
 esta forma debido a que detiene de manera instantánea todos los nodos y el envío de mensajes.
+
+*** Message ***
+Creamos el objeto Message que representa un mensaje que se envían los distintos nodos.
+Sus atributos son los siguientes:
+ - ID del nodo que envía el mensaje
+ - ID del nodo que recibe el mensaje
+ - Tiempo de vida del mensaje
