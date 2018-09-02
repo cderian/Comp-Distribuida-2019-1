@@ -139,7 +139,11 @@ public class CDGraph implements Runnable{
     	}
     }
 
+    /**
+     * Detiene el envío de mensajes entre los nodos.
+     */
     private void stopAction(){
     	this.stop();
+    	//System.out.println("¿Qué necesitas que haga para detener todo?");
     }
 }
