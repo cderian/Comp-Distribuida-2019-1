@@ -15,14 +15,14 @@ public class Grafica02{
 	public static void main(String[] args) {
 		
 		Graph graph = new SingleGraph("Graph 2");
-		RandomGenerator random_gen = new RandomGenerator(2);
+		RandomGenerator random_gen = new RandomGenerator();
 		random_gen.addSink(graph);
 		random_gen.begin();
 
-		//Producimos un número aleatorio entre 5 y 10.
+		//Producimos un número aleatorio entre 10 y 50.
 		//Este número indicará el número de nodos de nuestra gráfica.
 		Random random = new Random();
-		int r = random.nextInt(5)+6;
+		int r = random.nextInt(40)+11;
 
 		//Creamos los nodos
 		for(int i=0; i<r; i++){
